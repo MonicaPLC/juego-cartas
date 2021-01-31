@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+  <title>Juego de Cartas</title>
+</head>
+
+<body>
+
+  <!-- As a heading -->
+  <nav class="navbar navbar-light bg-success">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Juego de Cartas</span>
+    </div>
+  </nav>
+  <img src="img/ninja-rojo.jpg" width=300 height=300 alt="Imagen de ninja rojo">
+  <img src="img/ninja-negro.jpg" width=300 height=300 alt="Imagen de ninja rojo">
+
+
+
+  <script>
+
+    class Card {
+      constructor(name, cost) {
+        this.name = name;
+        this.cost = cost;
+      }
+      showStats() {
+        console.log(`Nombre:${this.name}
+     cost:${this.name}
+     power:${this.power}`
+        )
+
+      }
+
+    }
+
+
+
+    class Unit extends Card {
+      constructor(name, cost, power, res) {
+        super(name, cost)
+        this.power = power;
+        this.res = res;
+      }
+      attack(target) {
+
+        // formula para reducir a través de la target el poder
+        target.res = target.res - this.power;
+
+        // instaceof es decir sino psa esto...
+
+        if (!target.res instanceof Unit) {
+          console.log("ERROR!!!, se está atacando algo que no es una unidad")
+          return;
+        }
+
+        if (target.res <= 0) {
+          console.log(target.nombre + "MURIOOOOO!!!")
+        }
+      }
+    }
+
+    class Effect extends Card {
+      constructor(name, cost, text, stat, magnitud) {
+        super(name, cost)
+        this.text = text;
+        this.stat = stat;
+        this.magnitud = magnitud;
+      }
+
+      afectar(unit) {
+        if (this.stat == 'power') {
+          unit.power += this.magnitude;
+        } else {
+          unit.resistence += this.magnitude;
+        }
+      }
+    }
+
+
+
+
+
+    console.log('Jugador 1 convoca a Ninja Rojo');
+    const ninja_rojo = new Unit("Ninja_rojo", 3, 3, 4);
+    debugger;
+
+    console.log('El jugador 1 juega "Algoritmo duro" en "Ninja Cinturón Rojo"')
+    const algoritmo_duro = new Effect("Algoritmo_difícil", 2, "aumentar la resistencia del objetivo en 3", "Resiliencia", 3);
+    algoritmo_duro.afectar(ninja_rojo);
+    debugger;
+
+    cosole.log('El jugador 2 convoca a "Ninja Cinturón Negro"');
+    const ninja_negro = new Unit("Ninja_negro", 4, 5, 4);
+    debugger;   // para ver donde cae un error, poner play play play ?????
+
+    console.log('El jugador 2 juega "Rechazo de promesa no controlada" en " Ninja Cinturón Rojo"');
+    const promesa_no_controlada = new Effect('Rechazo de promesa no manejado', 1,
+      'reducir la resistencia del objetivo en 2', 'resistencia', -2);
+
+    promesa_no_controlada.afectar(ninja_rojo);
+    debugger;
+
+    console.log('El jugador 1 juega "Programación en pareja" en "Ninja Cinturón Rojo"');
+    const prog_parejas = new Effect('Programación en parejas', 3, 'aumentar el poder del objetivo en 2', 'poder', 2);
+    prog_parejas.afectar(ninja_rojo);
+    debugger;
+
+    console.log('"Ninja Cinturón Rojo", ataca a "Ninja Cinturón Negro"');
+    ninja_rojo.attack(ninja_negro);
+    debugger;
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>
